@@ -1,11 +1,13 @@
 package main;
 
+import commands.Command;
+
 import java.time.LocalDate;
 /**
  * Класс HumanBeing
  * @author Мишанин Никита
  */
-public class HumanBeing {
+public class HumanBeing implements Comparable<HumanBeing> {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -109,5 +111,10 @@ public class HumanBeing {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    @Override
+    public int compareTo(HumanBeing o) {
+        return name.compareTo(o.getName());
     }
 }
