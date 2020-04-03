@@ -40,10 +40,19 @@ public class Main implements Sources{
             App.runApp();
         } catch (Exception e) {
             String[] exception = e.toString().split(" ");
-            //System.out.println(e.getCause().toString());
-            if (e.getCause() == null) {
-                System.out.println(e.toString());
-                System.out.println("Ошибка, неверно задана перменная среда, задайте правильный путь с помощью команды export ИМЯ = \"ПУТЬ\"");
+            //for (String n: exception) {
+            //  System.out.println(n);
+            //}
+            if (exception[2].equals("(Отказано")) {
+                System.out.println("Ошибка прав доступа на файл");
+            } else {
+                if (exception[2].equals("(Не")) {
+                    System.out.println("Не удается найти файл, проверьте что файл существует");
+                } else {
+                    if (exception[2].equals("(Системе")) {
+                        System.out.println("Системе не удается найти указанный путь");
+                    }
+                }
             }
         }
     }
