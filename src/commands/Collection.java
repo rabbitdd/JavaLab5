@@ -23,11 +23,11 @@ public class Collection {
                 System.out.println(line);
             System.out.println();
         } catch (java.lang.Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             String[] exception = e.toString().split(" ");
-            //for (String n: exception) {
-              //  System.out.println(n);
-            //}
+            for (String n: exception) {
+                System.out.println(n);
+            }
             if (exception[2].equals("(Отказано")) {
                 System.out.println("Ошибка прав доступа на файл");
             } else {
@@ -52,7 +52,8 @@ public class Collection {
             System.out.println("Коллекция пуста");
         else
             for (HumanBeing Man : People)
-                System.out.println("Элемент коллекции: " + Man.getName() + " " + Man.getId() + " " + Man.getImpactSpeed());
+                System.out.println("Элемент коллекции: " + Man.getName() +
+                        ", Id: " + Man.getId() + ", Speed: " + Man.getImpactSpeed());
     }
 
     public void add(ArrayDeque<HumanBeing> People, HashSet<Long> ID, String[] args) {
@@ -168,10 +169,22 @@ public class Collection {
             System.out.println("Объекта с таким ID не существует");
     }
 
-    public void save(ArrayDeque<HumanBeing> People) throws IOException {
-        BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(path_out));
-        output.write(Parser.parsToJson(People));
-        output.close();
+    public void save(ArrayDeque<HumanBeing> People) {
+        BufferedOutputStream output = null;
+        try {
+            output = new BufferedOutputStream(new FileOutputStream(path_out));
+            output.write(Parser.parsToJson(People));
+            output.close();
+        } catch (FileNotFoundException e) {
+            String ex = e.toString();
+            if (ex.equals("java.io.FileNotFoundException: /home/s284694/JavaLab5/Data/Input.json (Permission denied)"))
+                System.out.println("У вас нет прав записи на файл Input.json, перейдите в каталог Data и измените права");
+            else
+                if (ex.equals("java.io.FileNotFoundException: " + path_out + " Не удается найти указанный файл)"))
+                    System.out.println("Системе не удается найти указанный файл, проверьте имя");
+        } catch (IOException e) {
+            System.out.println("Запись невозможна по причине отсутствия прав");
+        }
     }
 
     public void remove_by_id(ArrayDeque<HumanBeing> People, int id) {

@@ -38,12 +38,24 @@ public class Main implements Sources{
             Collection collection = new Collection();
             Application App = new Application(collection, Humanity, HUMAN, ID, SortList, set);
             App.runApp();
-        } catch (Exception e) {
-            String[] exception = e.toString().split(" ");
+        } catch (java.lang.Exception e) {
+            //e.printStackTrace();
+            String ex = e.toString();
+            if (ex.equals("java.io.FileNotFoundException: /home/s284694/JavaLab5/Data/Input.json (Permission denied)"))
+                System.out.println("У вас нет прав доступа на файл Input.json, перейдите в каталог Data и измените права");
+            else
+                if (ex.equals("java.io.FileNotFoundException: " + path_in + " (Не удается найти указанный файл)"))
+                    System.out.println("Системе не удается найти указанный файл, проверьте имя");
+                else
+                    if (ex.equals("java.lang.NullPointerException"))
+                        System.out.println("Неверное имя файла, проверьте имя файла в переменной окружения");
+            //String[] exception = e.toString().split(" ");
+            //e.printStackTrace();
+            //System.out.println(e.toString());
             //for (String n: exception) {
             //  System.out.println(n);
             //}
-            if (exception[2].equals("(Отказано")) {
+            /*if (exception[2].equals("(Отказано")) {
                 System.out.println("Ошибка прав доступа на файл");
             } else {
                 if (exception[2].equals("(Не")) {
@@ -54,6 +66,8 @@ public class Main implements Sources{
                     }
                 }
             }
+            */
+
         }
     }
 }
